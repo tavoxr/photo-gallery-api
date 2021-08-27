@@ -1,16 +1,14 @@
 import app from './app';
-import {startConnection} from './database';
+import './database';
 
+const main = ()=>{
 
-async function main(){
+const port = app.get('port');
 
-    startConnection();
-    
-    await app.listen(app.get('port'))
-    console.log(`Server on port ${app.get('port')}`);
-
+app.listen(port, ()=>{
+    console.log(`Server running on port ${port}`);
+});
 
 }
 
-
-main()
+main();

@@ -1,27 +1,24 @@
-import express from 'express';
+import express, { json, urlencoded } from 'express';
 import morgan from 'morgan';
-import path  from 'path';
-
 import indexRoutes from './routes/index';
+import path from 'path';
 
 const app = express();
 
 //settings
 app.set('port', process.env.PORT || 3000);
 
-
 //middlewares
 app.use(morgan('dev'));
 app.use(express.json());
+app.use(express.urlencoded({extended: false}));
 
 
 //routes
-app.use('/api',indexRoutes)
+app.use('/api', indexRoutes);
 
-//this folder is for app will be used to store public files
+
+// this folder will store public files
 app.use('/uploads', express.static(path.resolve('uploads')));
 
-
-
 export default app;
-

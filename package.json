@@ -1,35 +1,37 @@
 {
   "name": "photo-gallery-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "RestAPI to upload images using TypeScript, NodeJS and Mongodb",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
-    "clean": "rimraf dist",
+    "clean": " rimraf dist",
     "start": "npm run build && node dist/index.js",
     "dev": "nodemon src/index.ts"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tavoxr/photo-gallery-api.git"
+  },
   "author": "Gustavo Herrera",
   "license": "ISC",
-  "devDependencies": {
-    "@types/express": "^4.17.3",
-    "@types/fs-extra": "^8.1.0",
-    "@types/mongoose": "^5.7.6",
-    "@types/morgan": "^1.9.0",
-    "@types/multer": "^1.4.2",
-    "@types/uuid": "^7.0.0",
-    "nodemon": "^2.0.2",
-    "typescript": "^3.8.3"
+  "bugs": {
+    "url": "https://github.com/tavoxr/photo-gallery-api/issues"
   },
+  "homepage": "https://github.com/tavoxr/photo-gallery-api#readme",
   "dependencies": {
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "fs-extra": "^8.1.0",
-    "mongoose": "^5.9.4",
-    "morgan": "^1.9.1",
-    "multer": "^1.4.2",
-    "rimraf": "^3.0.2",
-    "ts-node": "^8.6.2",
-    "uuid": "^7.0.2"
+    "mongoose": "^6.0.2",
+    "morgan": "^1.10.0",
+    "ts-node": "^10.2.1"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@types/mongoose": "^5.11.97",
+    "@types/morgan": "^1.9.3",
+    "nodemon": "^2.0.12",
+    "typescript": "^4.4.2"
   }
 }

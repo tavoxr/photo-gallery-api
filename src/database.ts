@@ -1,13 +1,24 @@
-import {connect} from 'mongoose';
+import mongoose from 'mongoose';
+import config from './config';
 
 
-export async function startConnection(){
+const dbConexion = async ()=>{
 
-  const db =   await connect('mongodb://localhost/photo-gallery-db', {
-            useNewUrlParser: true,
-            useFindAndModify:false
-    });
-    console.log('Database is connected')
+    try{
+        await mongoose.connect(`${config.mongodbURI}`);
+
+    }catch(error){
+        console.log(error);
+    }
 
 }
+
+
+dbConexion();
+
+const db =  mongoose.connection;
+
+db.once('open',()=>{
+    console.log("Database connected to: ", config.mongodbURI);
+})
 
