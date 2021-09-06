@@ -15,7 +15,7 @@ app.use(express.urlencoded({extended: false}));
 
 
 //routes
-app.use('/api', indexRoutes);
+app.use('/api/photos', indexRoutes);
 
 
 // this folder will store public files
