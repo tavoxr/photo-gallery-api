@@ -19,6 +19,6 @@ dbConexion();
 const db =  mongoose.connection;
 
 db.once('open',()=>{
-    console.log("Database connected to: ", config.mongodbURI);
+    console.log("Database connected");
 })
 
