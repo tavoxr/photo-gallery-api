@@ -14,6 +14,10 @@ const PhotoSchema = new Schema({
     imageUrl:{
         type: String,
         required: true
+    },
+    fileS3Key:{
+        type: String,
+
     }
 
 },{
@@ -26,7 +30,9 @@ interface IPhoto extends Document{
     title: string;
     description: string;
     imageUrl: string;
+    fileS3Key: string;
 }
+
 
 
 export default  model<IPhoto>('Photo', PhotoSchema);

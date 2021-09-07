@@ -21,6 +21,6 @@ app.use('/api/photos', indexRoutes);
 
 
 // this folder will store public files
-app.use('/uploads', express.static(path.resolve('uploads')));
+//app.use('/uploads', express.static(path.resolve('uploads')));
 
 export default app;

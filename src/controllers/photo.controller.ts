@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import Photo from '../models/Photo';
 import path from 'path';
 import fs from 'fs-extra';
+import { s3 } from '../libs/s3';
 
 export const getPhotos = async (req: Request, res: Response): Promise<Response> => {
 
@@ -17,22 +18,29 @@ export const getPhotos = async (req: Request, res: Response): Promise<Response> 
 
 export const createPhoto = async (req: Request, res: Response): Promise<Response> => {
 
+    let fileMulter = (req as any).file;
+    console.log('fileMulter', fileMulter);
+    console.log('fieldname', fileMulter.location);
     try {
-        const { title, description } = req.body;
-        const imageUrl = req.file?.path;
 
-        console.log(req.file?.path);
+        const { title, description } = req.body;
+        const imageUrl = fileMulter.location;
+        const fileS3Key = fileMulter.key;
+        console.log('file', req.file);
+        console.log('filePath', req.file?.path);
         console.log(req.body)
 
         const newPhoto = new Photo({
             title,
             description,
-            imageUrl
+            imageUrl,
+            fileS3Key
         })
 
+        console.log('photo',newPhoto);
         const photoSaved = await newPhoto.save();
 
-        return res.status(201).json({ message: "Photo successfully saved", photoSaved })
+        return res.status(201).json({ message: "Photo successfully saved", photoSaved, file: req.file })
 
     } catch (error) {
         return res.status(500).json({ message: error || "Something goes wrong uploading a new photo" })
@@ -45,7 +53,7 @@ export const getPhoto = async (req: Request, res: Response): Promise<Response> =
     try {
         const id = req.params.id;
         const photo = await Photo.findById({ _id: id });
-
+        console.log('photo', photo)
         return res.status(200).json(photo);
 
     } catch (error) {
@@ -75,11 +83,21 @@ export const deletePhoto = async (req: Request, res: Response): Promise<Response
 
     try {
         const id = req.params.id;
+
         const photo = await Photo.findByIdAndRemove({ _id: id });
 
         if (photo) {
             try {
-                await fs.unlink(path.resolve(photo.imageUrl));
+                //await fs.unlink(path.resolve(photo.imageUrl));
+                s3.deleteObject(
+                    {   Bucket: 'angular-photo-gallery', 
+                        Key: photo.fileS3Key
+                    }, 
+                    (err, data)=> {
+                        console.error(err);
+                        console.log(data);
+               });
+
             } catch (error) {
                 res.json({ message: error });
             }

@@ -1,11 +1,13 @@
 import { Router } from "express";
 import {createPhoto, getPhotos, getPhoto, deletePhoto, updatePhoto} from '../controllers/photo.controller';
 import multer from  '../libs/multer';
+import {uploadS3} from "../libs/s3";
+
 const router = Router();
 
 router.get('/', getPhotos);
 
-router.post('/', multer.single('image'), createPhoto);
+router.post('/', uploadS3.single('image'), createPhoto);
 
 router.get('/:id', getPhoto);
 router.put('/:id', updatePhoto);
